@@ -7,3 +7,5 @@ out
 *.db-shm
 *.db-wal
 .DS_Store
+
+*.tsbuildinfo

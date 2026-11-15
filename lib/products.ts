@@ -8,7 +8,7 @@ export type Category = { slug: string; name: string; emoji: string };
 const API = (process.env.NEXT_PUBLIC_API_BASE_URL || "https://openapi.programming-hero.com/api/bazardor").replace(/\/$/, "");
 const emojis: Record<string,string> = { chal:"🍚", rice:"🍚", dal:"🫘", vegetables:"🥬", sobji:"🥬", mach:"🐟", fish:"🐟", meat:"🍗", murgi:"🍗", dim:"🥚", oil:"🫙", alu:"🥔", peyaj:"🧅", morich:"🌶️", roshun:"🧄", ada:"🫚", fruits:"🍎" };
 const pick = (o:any, keys:string[], fallback:any=null) => { for (const k of keys) if (o?.[k] !== undefined && o?.[k] !== null) return o[k]; return fallback; };
-const number = (v:any, fallback=0) => { if (typeof v === "number") return v; const n = Number(String(v ?? "").replace(/[৳,\s]/g,"")); return Number.isFinite(n) ? n : fallback; };
+const number = (v:any, fallback=0) => { if (typeof v === "number") return v; const bn="০১২৩৪৫৬৭৮৯"; const normalized=String(v ?? "").replace(/[০-৯]/g,d=>String(bn.indexOf(d))).replace(/[৳ টাকা,\s]/g,""); const n=Number(normalized); return Number.isFinite(n) ? n : fallback; };
 const text = (v:any, fallback="") => typeof v === "string" || typeof v === "number" ? String(v) : fallback;
 function unwrap(json:any): any { const d=json?.data; return d?.products ?? d?.items ?? d?.categories ?? d ?? json?.products ?? json?.items ?? json?.categories ?? json?.result ?? json; }
 function normaliseProduct(raw:any, i:number):Product {
